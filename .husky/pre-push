@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# If everything passes... Now we can commit
+echo '🤖 Preparing for build ...'
+
+yarn build ||
+(
+    echo '👎 Build failed. Investigate the errors above for details.'
+    false;
+)
+
+# If everything passes... Now we can commit
+echo '✅✅ Validation successful. Pushing changes. ✅✅'

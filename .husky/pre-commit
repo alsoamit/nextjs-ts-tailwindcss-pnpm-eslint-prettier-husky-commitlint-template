@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo '🤖 Pre-commit quality checks underway ...'
+
+# Checking Prettier standards
+yarn format:fix ||
+(
+    echo '🙄 Code formatting needs attention. Run "yarn format" and reattempt the commit.'
+    false;
+)
+
+# Checking ESLint Standards
+yarn eslint:check ||
+(
+    echo '🙄 Code quality issues detected. Fix them as advised, add your changes, and try committing again.'
+    false;
+)
+
+# Checking TypeScript type standards
+yarn types:check ||
+(
+    echo "🙄 Type checking didn't go as planned. Review and address the issues mentioned above."
+    false;
+)
+
+echo '✅✅ All set! Committing immediately. ✅✅'
